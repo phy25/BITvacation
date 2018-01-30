@@ -13,5 +13,6 @@ deploy:
   provider: script
   script: npm run build-deploy
   on:
+    node: "8"
     repo: phy25/BITvacation
     branch: master
