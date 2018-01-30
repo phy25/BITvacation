@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - "node"
+  - "8"
+cache:
+  directories:
+    - "node_modules"
+script:
+  - npm run build-dev
+  - npm test
+
+deploy:
+  provider: script
+  script: npm run build-deploy
+  on:
+    repo: phy25/BITvacation
+    branch: master
