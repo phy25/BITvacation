@@ -13,8 +13,8 @@
     "deploy": "node deploy"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Phy25",
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.1",
