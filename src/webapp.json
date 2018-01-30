@@ -1,0 +1,17 @@
+{
+  "name": "理工放假啦 - 假期服务安排查询",
+  "short_name": "理工放假啦",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "display": "standalone",
+  "orientation": "any",
+  "start_url": "./",
+  "scope": "/BITvacation/",
+  "background_color": "#FFFFFF",
+  "theme_color": "#cddc39"
+}

@@ -1,0 +1,84 @@
+body, html {
+  font-family: "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans CJK CN", "Microsoft Yahei",Arial,Helvetica,sans-serif;
+  font-size: 16px;
+  margin: 0;
+}
+
+p{margin: 0.5em 0;}
+
+#header.with-placeholder{text-align: center; margin: 5em auto;}
+#sw-update{text-align: center;padding: 0.5em 0;background: #fff3e0;border-top:1px solid #000;border-bottom:1px solid #000;cursor: pointer;}
+#sw-update:hover{background: #ff9800;}
+
+.small{font-size: 14px;font-weight: 400;}
+.hide{display: none;}
+
+.wrapper{max-width: 800px;width: auto;margin: 0 auto;padding: 0 0.5em;}
+
+.vis {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.vis .tls{min-height: 3.65em;}
+.vis .level-2{background: #8bc34a;border: none;}
+.vis .level-1{background: #cddc39;border: none;}
+.vis .level-0{background: #ffccbc/**/;border: none;}
+.vis-range{cursor: pointer;}
+.vis-current-time{z-index: 100;}
+.vis-labelset .vis-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.chart-control{margin-bottom: 0.5em;display: flex;justify-content: space-between;}
+.chart-control button{font-size: 1.2em;}
+
+#snackbox {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+#snackbox-inner{
+	min-width: 20em;
+	margin: 0 auto 2em;
+	padding: 3.5em 2em 2em;
+    background: #FFF;
+    display: inline-block;
+    position: relative;
+    max-width: 30em;
+    box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+}
+#snackbox-close{
+	position: absolute;
+	right: 0.8em;
+	top: 0.8em;
+	border: 0;
+	background: 0;
+	font-size: 1.2em;
+	user-select: none;
+}
+#snackbox-content{
+    max-height: 50vh;
+    overflow-y: auto;
+}
+@media screen and (orientation:portrait){
+	#snackbox{
+		left: 0;
+		width: 100%;
+		transform: none;
+	}
+	#snackbox-inner{
+		min-width: auto;
+	    max-width: none;
+	    width: 100%;
+	    box-sizing: border-box;
+	    margin: 0;
+	    padding: 3.5em 1.5em 1em;
+	}
+}

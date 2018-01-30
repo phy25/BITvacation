@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+
+  <title>理工放假啦 - 假期服务安排查询</title>
+  <meta itemprop="description" content="北京理工大学非官方假期服务安排聚合查询。" />
+  <link rel="canonical" href="https://seethediff.cn/BITvacation/" />
+
+  <link rel="icon" href="<%= require('./icon.png') %>">
+  <link rel="apple-touch-icon" href="<%= require('./icon.png') %>">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="<%= require('./webapp.json') %>">
+  <meta name="theme-color" content="#cddc39">
+
+  <script>
+  /* Version 20160509 */
+  var JSORGtrack=function(a,b,c,d,e){var h,i,j,k,l,m,n,f=window,g=document;a&&(f._hmt=f._hmt||[],d&&_hmt.push(["_setCustomVar",1,"UID",d,1]),h=g.createElement("script"),h.src=a,h.async=1,i=g.getElementsByTagName("script")[0],i.parentNode.insertBefore(h,i)),b&&c&&(j=new Image,k="//www.google-analytics.com/",l=function(a){var b,f;"object"!=typeof e&&(e={}),d&&(e["userId"]=d),ga("create",c,e),a&&ga(function(a){a.set("sendHitTask",function(a){var b=a.get("hitPayload");j.src="https://track.jinshan.org.cn/track.php?"+b})}),d&&ga("set","dimension1",d),b=function(){for(var d,a={},b=location.search.slice(1),c=/([^&=]+)=([^&]*)/g;d=c.exec(b);)a[decodeURIComponent(d[1])]=decodeURIComponent(d[2]);return a},f=b(),f["hmsr"]&&ga("set","campaignSource",f["hmsr"]),f["hmmd"]&&ga("set","campaignMedium",f["hmmd"]),f["hmpl"]&&ga("set","campaignName",f["hmpl"]),f["hmkw"]&&ga("set","campaignKeyword",f["hmkw"]),f["hmci"]&&ga("set","campaignContent",f["hmci"]),ga("send","pageview")},m=function(a,b,c,d,e,h,i){d="script",e="ga",f["GoogleAnalyticsObject"]=e,f[e]=f[e]||function(){(f[e].q=f[e].q||[]).push(arguments)},f[e].l=1*new Date,h=g.createElement(d),i=g.getElementsByTagName(d)[0],h.async=1,h.src=a,i.parentNode.insertBefore(h,i)},n=setTimeout(function(){m(b),l(1)},1e3),j.onload=function(){clearTimeout(n),f.ga||(m(k+"analytics.js"),l(0))},j.src=k+"collect?v=1")};
+  window.onfinished=function(){JSORGtrack('', 'https://jsorgcn-lfs.b0.upaiyun.com/js/analytics.js', 'UA-9818230-8', '', {'siteSpeedSampleRate': 10});};
+  </script>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>理工放假啦 <span id="page-name" class="small"><%- htmlWebpackPlugin.options.page_name %></span></h1>
+    <div id="sw-update" class="hide">本页数据已更新，下次打开时自动生效 或 点击立即更新</div>
+    <div id="header" class="with-placeholder">
+      <img src="<%= require('./icon.png') %>" width="40%" />
+    </div>
+    <div id="nav" class="hide">
+      <p id="nav-jump"><strong>快速跳转</strong></p>
+    </div>
+    <noscript>
+      <p>抱歉，请打开 JavaScript 以查看本页面。</p>
+    </noscript>
+    <div id="content"></div>
+    <div id="footer"></div>
+    <hr>
+    <p class="small">Made by @phy25, icon from <a href="http://www.freepik.com" title="Freepik, licensed by Creative Commons BY 3.0">Freepik</a>.</p>
+  </div>
+  <div id="snackbox" class="hide" tabindex="0">
+    <div id="snackbox-inner">
+      <button id="snackbox-close" aria-label="关闭">&#10006;</button>
+      <div id="snackbox-content"></div>
+    </div>
+  </div>
+  <%= require('./'+htmlWebpackPlugin.options.page_id+'-data.ejs') %>
+</body>
+</html>
