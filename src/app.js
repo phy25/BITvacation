@@ -2,7 +2,7 @@
 import 'vis/dist/vis-timeline-graph2d.min.css';
 import './app.css';
 
-import { DataSet, Timeline } from 'vis/index-timeline-graph2d';
+import { DataSet, Timeline } from './vis-timeline-graph2d.js';
 import Moment from 'moment';
 Moment.locale('zh-CN');
 var $id = (id) => document.getElementById(id) || {};
@@ -27,7 +27,7 @@ OfflinePluginRuntime.install({
 });
 
 function alertSnackbox(content){
-  $id('snackbox-content').innerHTML = trim_newlines(content || '').replace(/\n/g, '<br>');
+  if(content) $id('snackbox-content').innerHTML = trim_newlines(content || '').replace(/\n/g, '<br>');
   $id('snackbox').className = '';
   $id('snackbox-close').focus();
 }
@@ -51,6 +51,15 @@ if('BITvacationDATA' in window){
   $id('footer').innerHTML += (data.footer_html || '');
   var start_moment = Moment().startOf('day'), end_moment = start_moment.clone().add(timeline_width_days, 'days');
   var navJumpHTML = '';
+
+  // Welcome
+  if(localStorage){
+    var v = localStorage['BITvacation_welcomeVersion'];
+    if(!v || v < 1){
+      alertSnackbox();
+      localStorage['BITvacation_welcomeVersion'] = 1;
+    }
+  }
 
   data.charts.forEach(function(c){
     var container = document.createElement('div');
