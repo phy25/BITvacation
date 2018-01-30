@@ -13,7 +13,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 var CDNfolder_filename = 'cdn/';
 var CDNfolder_path = '';
 var CDNfolder_noCDN = '';
-var publicPath = "/";
+var publicPath = "./";
 var outputPathBase = path.resolve(__dirname, "dist");
 if(process.env.NODE_ENV === "production"){
   CDNfolder_filename = '';
