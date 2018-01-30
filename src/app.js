@@ -121,7 +121,7 @@ if('BITvacationDATA' in window){
           year:       ''
         }
       },
-      orientation:{item:'top', 'axis':'top'},
+      orientation:{'item':'top', 'axis':'top'},
       template: function (item, element, data) {
         return '<strong>'+item.title+'</strong><br>'+item.content;
       },
