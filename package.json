@@ -7,8 +7,9 @@
     "test": "casperjs test tests/ --concise",
     "start": "webpack-dev-server --open",
     "build": "cmd /V /C \"SET NODE_ENV=production&& webpack --config webpack.config.js\"",
+    "build-linux": "NODE_ENV=production webpack --config webpack.config.js",
     "build-dev": "webpack --config webpack.config.js",
-    "build-deploy": "npm run build && npm run deploy",
+    "build-deploy-linux": "npm run build-linux && npm run deploy",
     "deploy": "node deploy"
   },
   "keywords": [],
