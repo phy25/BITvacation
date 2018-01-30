@@ -66,3 +66,109 @@ exports.timeline.Range.prototype._onTouch = function (event) {  // eslint-disabl
   // Comment out this one to let WeChat use it
   // util.preventDefault(event);
 };
+
+exports.timeline.components.items.RangeItem.prototype.repositionX = function(limitSize) {
+  var parentWidth = this.parent.width;
+  var start = this.conversion.toScreen(this.data.start);
+  var end = this.conversion.toScreen(this.data.end);
+  var align = this.data.align === undefined ? this.options.align : this.data.align;
+  var contentStartPosition;
+  var contentWidth;
+
+  // limit the width of the range, as browsers cannot draw very wide divs
+  // unless limitSize: false is explicitly set in item data
+  if (this.data.limitSize !== false && (limitSize === undefined || limitSize === true)) {
+    if (start < -parentWidth) {
+      start = -parentWidth;
+    }
+    if (end > 2 * parentWidth) {
+      end = 2 * parentWidth;
+    }
+  }
+
+  // add 0.5 to compensate floating-point values rounding
+  var boxWidth = Math.max(end - start + 0.5, 1);
+
+  if (this.overflow) {
+    if (this.options.rtl) {
+      this.right = start;
+    } else {
+      this.left = start;
+    }
+    this.width = boxWidth + this.props.content.width;
+    contentWidth = this.props.content.width;
+
+    // Note: The calculation of width is an optimistic calculation, giving
+    //       a width which will not change when moving the Timeline
+    //       So no re-stacking needed, which is nicer for the eye;
+  }
+  else {
+    if (this.options.rtl) {
+      this.right = start;
+    } else {
+      this.left = start;
+    }
+    this.width = boxWidth;
+    contentWidth = Math.min(end - start, this.props.content.width);
+  }
+
+  if (this.options.rtl) {
+    this.dom.box.style.right = this.right + 'px';
+  } else {
+    this.dom.box.style.left = this.left + 'px';
+  }
+  this.dom.box.style.width = boxWidth + 'px';
+
+  switch (align) {
+    case 'left':
+      if (this.options.rtl) {
+        this.dom.content.style.right = '0';
+      } else {
+        this.dom.content.style.left = '0';
+      }
+      break;
+
+    case 'right':
+      if (this.options.rtl) {
+        this.dom.content.style.right = Math.max((boxWidth - contentWidth), 0) + 'px';
+      } else {
+        this.dom.content.style.left = Math.max((boxWidth - contentWidth), 0) + 'px';
+      }
+      break;
+
+    case 'center':
+      if (this.options.rtl) {
+        this.dom.content.style.right = Math.max((boxWidth - contentWidth) / 2, 0) + 'px';
+      } else {
+        this.dom.content.style.left = Math.max((boxWidth - contentWidth) / 2, 0) + 'px';
+      }
+
+      break;
+
+    default: // 'auto'
+      // when range exceeds left of the window, position the contents at the left of the visible area
+      if (this.overflow) {
+        if (end > 0) {
+          contentStartPosition = Math.max(-start, 0);
+        }
+        else {
+          contentStartPosition = -contentWidth; // ensure it's not visible anymore
+        }
+      }
+      else {
+        if (start < 0) {
+          contentStartPosition = -start;
+        }
+        else {
+          contentStartPosition = 0;
+        }
+      }
+      if (this.options.rtl) {
+        this.dom.content.style.right = contentStartPosition + 'px';
+      } else {
+        this.dom.content.style.left = contentStartPosition + 'px';
+        this.dom.content.style.width = 'calc(100% - ' + contentStartPosition + 'px)';
+        this.dom.content.style.maxWidth = (parentWidth - Math.max(0, this.left)) + 'px';
+      }
+  }
+};

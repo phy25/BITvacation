@@ -23,7 +23,7 @@ p{margin: 0.5em 0;}
 .vis .tls{min-height: 3.65em;}
 .vis .level-2{background: #8bc34a;border: none;}
 .vis .level-1{background: #cddc39;border: none;}
-.vis .level-0{background: #ffccbc/**/;border: none;}
+.vis .level-0{background: #ffccbc;border: none;}
 .vis-range{cursor: pointer;}
 .vis-current-time{z-index: 100;}
 .vis-labelset .vis-label {
@@ -32,6 +32,23 @@ p{margin: 0.5em 0;}
     align-items: center;
     text-align: center;
 }
+.vis-item.vis-range .vis-item-content {
+    display: block;
+    overflow: hidden;/* do not use overflow-x only! it will make panning unusable */
+    text-overflow: ellipsis;/*
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;*/
+}
+/*
+.vis-item-overflow::after {
+    content: "...";
+    position: absolute;
+    right: 0;
+    top: 2em;
+    height: 1.5em;
+    line-height: 1;
+    padding: 0 0.5em 0 0.1em;
+}*/
 
 .chart-control{margin-bottom: 0.5em;display: flex;justify-content: space-between;}
 .chart-control button{font-size: 1.2em;}
