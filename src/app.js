@@ -136,14 +136,20 @@ if('BITvacationDATA' in window){
       }
     });
     */
-    var mouseMoving = 0;
-    timeline.on('mouseDown', function(){
+    var mouseMoving = 0, mouseMovePos = 0;
+    timeline.on('mouseDown', function(e){
         mouseMoving = 1;
+        mouseMovePos = e.pageX + e.pageY;
+        console.log('mm = 1');
     });
-    timeline.on('mouseMove', function(){
-        if(mouseMoving == 1) mouseMoving = 2;
+    timeline.on('mouseMove', function(e){
+        if(mouseMoving == 1 && Math.abs(e.pageX + e.pageY - mouseMovePos) > 3){
+          mouseMoving = 2;
+          console.log('mm = 2');
+        }
     });
     timeline.on('mouseUp', function(e){
+      console.log(mouseMoving);
         if(mouseMoving != 2){
             var props = e;
             if(props.item){
