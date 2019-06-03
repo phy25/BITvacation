@@ -10,7 +10,7 @@ const config_main = {
 	host: "ftp.seethediff.cn",
 	port: 21,
 	localRoot: path.resolve(__dirname, "dist"),
-	remoteRoot: "/domains/seethediff.cn/public_html/BITvacation",
+	remoteRoot: "/home/bitvacation/public_html",
 	exclude: ['cdn']
 };
 const config_cdn = {
