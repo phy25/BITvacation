@@ -5,7 +5,7 @@ var ftpDeploy_cdn = new FtpDeploy();
 var errcode = 1;
 
 const config_main = {
-	username: process.env.FTP_MAIN_USER,
+	user: process.env.FTP_MAIN_USER,
 	password: process.env.FTP_MAIN_PASS,
 	host: "ftp.seethediff.cn",
 	port: 21,
@@ -14,7 +14,7 @@ const config_main = {
 	exclude: ['cdn']
 };
 const config_cdn = {
-	username: process.env.FTP_CDN_USER,
+	user: process.env.FTP_CDN_USER,
 	password: process.env.FTP_CDN_PASS,
 	host: "v0.ftp.upyun.com",
 	port: 21,
