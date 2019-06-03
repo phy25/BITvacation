@@ -11,6 +11,7 @@ const config_main = {
 	port: 21,
 	localRoot: path.resolve(__dirname, "dist"),
 	remoteRoot: "/home/bitvacation/public_html",
+	include: ['*', '**/*'],
 	exclude: ['cdn']
 };
 const config_cdn = {
@@ -19,6 +20,7 @@ const config_cdn = {
 	host: "v0.ftp.upyun.com",
 	port: 21,
 	localRoot: path.resolve(__dirname, "dist", "cdn"),
+	include: ['*', '**/*'],
 	remoteRoot: "/projects/bitvacation"
 };
 
