@@ -1,4 +1,5 @@
 'use strict';
+
 const webpack = require('webpack');
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
@@ -65,9 +66,10 @@ var config = {
           cacheDirectory: true,
           presets: [ "@babel/preset-env" ].map(require.resolve),
           plugins: [
-            "transform-es3-property-literals", // see https://github.com/almende/vis/pull/2452
-            "transform-es3-member-expression-literals", // see https://github.com/almende/vis/pull/2566
-            "@babel/plugin-transform-runtime" // see https://github.com/almende/vis/pull/2566
+            // "transform-es3-property-literals", // see https://github.com/almende/vis/pull/2452
+            // "transform-es3-member-expression-literals", // see https://github.com/almende/vis/pull/2566
+            "@babel/plugin-transform-runtime", // see https://github.com/almende/vis/pull/2566
+            "@babel/plugin-transform-modules-commonjs"
           ]
         }
       }, {
