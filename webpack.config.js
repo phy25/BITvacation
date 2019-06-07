@@ -1,9 +1,10 @@
 'use strict';
+
 const webpack = require('webpack');
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const ClosureCompilerPlugin = require('webpack-closure-compiler');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -39,7 +40,7 @@ var config = {
      * see http://stackoverflow.com/questions/25384360/how-to-prevent-moment-js-from-loading-locales-with-webpack
      */
     new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(zh-cn)$/),
-    new ExtractTextPlugin(CDNfolder_filename+"[name]-[chunkhash].css"),
+    new MiniCssExtractPlugin({filename: CDNfolder_filename+"[name]-[chunkhash].css"}),
     new HtmlWebpackPlugin({
       filename: CDNfolder_noCDN+'index.html',
       page_id: "2018w-zgc",
@@ -63,58 +64,49 @@ var config = {
         loader: 'babel-loader',
         query: {
           cacheDirectory: true,
-          presets: [ "babel-preset-env" ].map(require.resolve),
+          presets: [ "@babel/preset-env" ].map(require.resolve),
           plugins: [
-            "transform-es3-property-literals", // see https://github.com/almende/vis/pull/2452
-            "transform-es3-member-expression-literals", // see https://github.com/almende/vis/pull/2566
-            "transform-runtime" // see https://github.com/almende/vis/pull/2566
+            // "transform-es3-property-literals", // see https://github.com/almende/vis/pull/2452
+            // "transform-es3-member-expression-literals", // see https://github.com/almende/vis/pull/2566
+            "@babel/plugin-transform-runtime", // see https://github.com/almende/vis/pull/2566
+            "@babel/plugin-transform-modules-commonjs"
           ]
         }
       }, {
         test: /\.js$/, //Check for all js files
         loader: 'babel-loader',
         query: {
-          presets: [ "babel-preset-env" ].map(require.resolve)
+          presets: [ "@babel/preset-env" ].map(require.resolve)
         }
       }, {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
-        })
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       },{
         test: /\.html|ejs$/,
         loader: 'html-loader'
       },
       {
-         test: /\.(png|svg|jpg|gif)$/,
-         use: [
-          {
-             loader: 'file-loader',
-             options:{
-              name: CDNfolder_filename+'[name].[ext]'
-             }
-          }
-        ]
+        test: /\.(png|svg|jpg|gif)$/,
+        loader: 'file-loader',
+        options:{
+          name: CDNfolder_filename+'[name].[ext]'
+        }
       },
       {
-         test: /webapp\.json$/,
-         use: [
-          {
-            loader: 'file-loader',
-            options:{
-              name: '[name].[ext]',
-              publicPath: function(url){
-                if(CDNfolder_noCDN){
-                  url = url.replace(CDNfolder_noCDN, '');
-                }
-                return './'+url;
-              },
-              // useRelativePath: false,
-              outputPath: CDNfolder_noCDN
+        test: /webapp\.json$/,
+        type: 'javascript/auto',
+        loader: 'file-loader',
+        options:{
+          name: '[name].[ext]',
+          publicPath: function(url){
+            if(CDNfolder_noCDN){
+              url = url.replace(CDNfolder_noCDN, '');
             }
-          }
-        ]
+            return './'+url;
+          },
+          // useRelativePath: false,
+          outputPath: CDNfolder_noCDN
+        }
       }
     ],
   },
@@ -124,19 +116,20 @@ var config = {
     publicPath: "/",
     // host: '0.0.0.0'
   },
-  devtool: false// "eval-source-map" // Default development sourcemap
+  devtool: false,// "eval-source-map" // Default development sourcemap
+  mode: 'development'
 };
 
 // Check if build is running in production mode, then change a lot
 if (process.env.NODE_ENV === "production") {
   config.devtool = false;
+  config.mode = 'production';
 
   config.plugins.unshift(new CleanWebpackPlugin(['dist']));
 
   // Can do more here
   // JSUglify plugin
   config.plugins.push(
-    true?
     new UglifyJSPlugin({
       test: /\.js($|\?)/i,
       uglifyOptions: {
@@ -152,21 +145,7 @@ if (process.env.NODE_ENV === "production") {
         warnings: false
       }
     })
-    :
-    new ClosureCompilerPlugin({compiler: {
-      compilation_level: 'ADVANCED',
-      warning_level: 'DEFAULT',
-      externs: [__dirname+"/src/closure-extern.js"],
-      //use_types_for_optimization: false,
-      third_party: true
-      }})
   );
-  /*
-  config.plugins.push(
-     new webpack.DefinePlugin({
-       'process.env.NODE_ENV': JSON.stringify('production')
-     }));
-  */
   // Offline plugin
   // Bundle styles seperatly using plugins etc
   config.plugins.push(
