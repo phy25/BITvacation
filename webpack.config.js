@@ -89,7 +89,15 @@ var config = {
         test: /\.(png|svg|jpg|gif)$/,
         loader: 'file-loader',
         options:{
-          name: CDNfolder_noCDN+'[name].[ext]'
+          name: '[name].[ext]',
+          publicPath: function(url){
+            if(CDNfolder_noCDN){
+              url = url.replace(CDNfolder_noCDN, '');
+            }
+            return './'+url;
+          },
+          outputPath: CDNfolder_noCDN
+          // I am too lazy to replace strings in webapp.json, so make it local!
         }
       },
       {
